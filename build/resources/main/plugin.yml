@@ -1,0 +1,22 @@
+name: TickWatch
+version: '1.0'
+main: ticks.tickWatch.TickWatch
+api-version: '1.13'
+description: Server time monitoring plugin
+author: YourName
+website: https://github.com/yourname/tickwatch
+
+commands:
+  tickwatch:
+    description: Show server monitoring GUI or information
+    usage: /tickwatch [help|gui|time|ram|cpu|system|save|text|reload|admin]
+    aliases: [tw]
+    permission: tickwatch.use
+  
+permissions:
+  tickwatch.use:
+    description: Use TickWatch commands
+    default: true
+  tickwatch.admin:
+    description: Access admin commands like reload
+    default: op

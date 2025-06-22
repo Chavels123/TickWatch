@@ -1,0 +1,88 @@
+# ==========================================
+#           TickWatch Configuration
+# ==========================================
+
+# Plugin Settings
+plugin:
+  # Update interval for GUI refreshes (in seconds)
+  update-interval: 2
+  # Save data automatically on shutdown
+  auto-save: true
+
+# Performance Monitoring Thresholds
+thresholds:
+  # TPS Warning Levels
+  tps:
+    warning: 15.0    # Send alert when TPS drops below this value
+    critical: 10.0   # Critical TPS level
+  
+  # Memory Usage Warning Levels (percentage)
+  memory:
+    warning: 80.0    # Send alert when memory usage exceeds this percentage
+    critical: 90.0   # Critical memory level
+  
+  # CPU Usage Warning Levels (percentage)
+  cpu:
+    warning: 85.0    # Send alert when CPU usage exceeds this percentage
+    critical: 95.0   # Critical CPU level
+
+# Webhook Notifications
+webhook:
+  # Enable/disable webhook notifications
+  enabled: false
+  
+  # Discord webhook URL (required if enabled)
+  url: ""
+  
+  # Notification settings
+  notifications:
+    # Check interval in minutes (minimum: 1, maximum: 60)
+    check-interval: 5
+    
+    # Cooldown between alerts for the same issue (in minutes)
+    alert-cooldown: 15
+    
+    # Which alerts to send
+    alerts:
+      tps-warning: true
+      tps-critical: true
+      memory-warning: true
+      memory-critical: true
+      cpu-warning: true
+      cpu-critical: true
+      server-startup: true
+      server-shutdown: false
+  
+  # Message customization
+  messages:
+    # Bot appearance
+    username: "TickWatch Monitor"
+    avatar-url: ""
+    
+    # Embed colors (hex format)
+    colors:
+      normal: "#00FF00"      # Green for normal status
+      warning: "#FFA500"     # Orange for warnings
+      critical: "#FF0000"    # Red for critical alerts
+      info: "#0099FF"        # Blue for info messages
+    
+    # Custom messages
+    titles:
+      warning: "⚠️ Performance Warning"
+      critical: "🚨 Critical Alert"
+      startup: "✅ Server Started"
+      shutdown: "🔴 Server Shutdown"
+    
+    # Footer text
+    footer: "TickWatch Server Monitor"
+
+# Advanced Settings
+advanced:
+  # Connection timeout for webhooks (seconds)
+  timeout: 10
+  
+  # Retry attempts for failed webhook calls
+  retry-attempts: 3
+  
+  # Debug mode (enables additional logging)
+  debug: false 
