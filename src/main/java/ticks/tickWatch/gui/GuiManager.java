@@ -8,7 +8,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -28,7 +27,6 @@ public class GuiManager implements Listener {
     private final WebhookManager webhookManager;
     private final DataManager dataManager;
     private final Map<Player, String> activeGuis;
-    private final Map<UUID, String> awaitingChatInput;
     private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     public GuiManager(JavaPlugin plugin, PerformanceManager performanceManager, WebhookManager webhookManager, DataManager dataManager) {
@@ -37,7 +35,6 @@ public class GuiManager implements Listener {
         this.webhookManager = webhookManager;
         this.dataManager = dataManager;
         this.activeGuis = new HashMap<>();
-        this.awaitingChatInput = new HashMap<>();
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
         startRealtimeUpdates();
@@ -502,25 +499,5 @@ public class GuiManager implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         removeActiveGui(event.getPlayer());
-    }
-
-    @EventHandler
-    public void onPlayerChat(AsyncPlayerChatEvent event) {
-        Player player = event.getPlayer();
-        UUID playerId = player.getUniqueId();
-
-        if (awaitingChatInput.containsKey(playerId)) {
-            event.setCancelled(true);
-            String inputType = awaitingChatInput.get(playerId);
-            String message = event.getMessage().trim();
-
-            if (message.equalsIgnoreCase("cancel")) {
-                awaitingChatInput.remove(playerId);
-                player.sendMessage(ChatColor.RED + "Operation cancelled.");
-                return;
-            }
-            // Logic for handling input can be expanded here if needed (e.g., setting thresholds)
-            awaitingChatInput.remove(playerId); // Just remove for now to prevent getting stuck
-        }
     }
 }
